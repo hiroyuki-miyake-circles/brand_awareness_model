@@ -61,10 +61,10 @@ if st.button('run'):
     )
 
     # 予測値の表示
-    st.write(f'予測値: {predicted_value}')
+    st.write(f'予測brand keyword click: {predicted_value}')
     st.write('---詳細---')
-    st.write(f'ベース認知 値: {seasonality_contribution}')
-    st.write(f'認知費用 値: {awareness_contribution}')
-    st.write(f'指名検索費用 値: {sem_brand_contribution}')
-    st.write(f'記事掲載数 値: {publications_contribution}')
+    st.write(f'ベース認知 click: {seasonality_contribution}')
+    st.write(f'認知費 click: {awareness_contribution}')
+    st.write(f'指名検索費 click: {sem_brand_contribution}')
+    st.write(f'記事掲載数 click: {publications_contribution}')
 
