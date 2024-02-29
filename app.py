@@ -52,6 +52,12 @@ if st.button('run'):
     sem_brand_contribution = coef['指名検索費(円)'] * sem_investment
     publications_contribution = coef['記事掲載数'] * publications
 
+    # 各変数のGA寄与値を計算
+    seasonality_GA_contribution = (coef['Seasonality'] * uq2019 + coef['intercept'])*0.0221
+    awareness_GA_contribution = (coef['認知費(円)'] * pm_awareness)*0.0221
+    sem_brand_GA_contribution = (coef['指名検索費(円)'] * sem_investment)*0.0221
+    publications_GA_contribution = (coef['記事掲載数'] * publications)*0.0221
+
     # 予測計算
     predicted_value = (
         seasonality_contribution +
@@ -60,11 +66,19 @@ if st.button('run'):
         publications_contribution
     )
 
+    # 予測計算
+    predicted_GAvalue = (
+        (seasonality_contribution +
+        awareness_contribution +
+        sem_brand_contribution +
+        publications_contribution)*0.0221
+    )
+
     # 予測値の表示
-    st.write(f'予測brand keyword click: {predicted_value}')
+    st.write(f'予測brand keyword click: {predicted_value} = {predicted_GAvalue}GA')
     st.write('---詳細---')
-    st.write(f'ベース認知 click: {seasonality_contribution}')
-    st.write(f'認知費 click: {awareness_contribution}')
-    st.write(f'指名検索費 click: {sem_brand_contribution}')
-    st.write(f'記事掲載数 click: {publications_contribution}')
+    st.write(f'ベース認知 click: {seasonality_contribution} = {seasonality_GA_contribution}GA')
+    st.write(f'認知費 click: {awareness_contribution} = {awareness_GA_contribution}GA')
+    st.write(f'指名検索費 click: {sem_brand_contribution} = {sem_brand_GA_contribution}GA')
+    st.write(f'記事掲載数 click: {publications_contribution} = {publications_GA_contribution}GA')
 
