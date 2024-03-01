@@ -47,38 +47,39 @@ publications = st.number_input('記事掲載数', value=0.0, format='%f')
 # 予測実行ボタン
 if st.button('run'):
      # 各変数の寄与値を計算
-    seasonality_contribution = coef['Seasonality'] * uq2019 + coef['intercept']
-    awareness_contribution = coef['認知費(円)'] * pm_awareness
-    sem_brand_contribution = coef['指名検索費(円)'] * sem_investment
-    publications_contribution = coef['記事掲載数'] * publications
+    seasonality_contribution = round(coef['Seasonality'] * uq2019 + coef['intercept'],1)
+    awareness_contribution = round(coef['認知費(円)'] * pm_awareness,1)
+    sem_brand_contribution = round(coef['指名検索費(円)'] * sem_investment,1)
+    publications_contribution = round(coef['記事掲載数'] * publications,1)
 
-    # 各変数のGA寄与値を計算
-    seasonality_GA_contribution = (coef['Seasonality'] * uq2019 + coef['intercept'])*0.0221
-    awareness_GA_contribution = (coef['認知費(円)'] * pm_awareness)*0.0221
-    sem_brand_GA_contribution = (coef['指名検索費(円)'] * sem_investment)*0.0221
-    publications_GA_contribution = (coef['記事掲載数'] * publications)*0.0221
+    # 各変数のGA寄与値を計算し、小数点第1位まで丸める
+    seasonality_GA_contribution = round((coef['Seasonality'] * uq2019 + coef['intercept']) * 0.0221, 1)
+    awareness_GA_contribution = round((coef['認知費(円)'] * pm_awareness) * 0.0221, 1)
+    sem_brand_GA_contribution = round((coef['指名検索費(円)'] * sem_investment) * 0.0221, 1)
+    publications_GA_contribution = round((coef['記事掲載数'] * publications) * 0.0221, 1)
 
-    # 予測計算
-    predicted_value = (
+    # 予測計算とフォーマットを指定して小数点第1位までの文字列に変換
+    predicted_value = format(
         seasonality_contribution +
         awareness_contribution +
         sem_brand_contribution +
-        publications_contribution
+        publications_contribution,
+        '.1f'
     )
 
-    # 予測計算
-    predicted_GAvalue = (
+    predicted_GAvalue = format(
         (seasonality_contribution +
         awareness_contribution +
         sem_brand_contribution +
-        publications_contribution)*0.0221
+        publications_contribution) * 0.0221,
+        '.1f'
     )
 
     # 予測値の表示
-    st.write(f'予測brand keyword click: {predicted_value} = {predicted_GAvalue}GA')
+    st.write(f'予測brand keyword click: {predicted_value}click = {predicted_GAvalue}GA')
     st.write('---詳細---')
-    st.write(f'ベース認知 click: {seasonality_contribution} = {seasonality_GA_contribution}GA')
-    st.write(f'認知費 click: {awareness_contribution} = {awareness_GA_contribution}GA')
-    st.write(f'指名検索費 click: {sem_brand_contribution} = {sem_brand_GA_contribution}GA')
-    st.write(f'記事掲載数 click: {publications_contribution} = {publications_GA_contribution}GA')
+    st.write(f'ベース認知 : {seasonality_contribution}click = {seasonality_GA_contribution}GA')
+    st.write(f'認知費 : {awareness_contribution}click = {awareness_GA_contribution}GA')
+    st.write(f'指名検索費 : {sem_brand_contribution}click = {sem_brand_GA_contribution}GA')
+    st.write(f'記事掲載数 : {publications_contribution}click = {publications_GA_contribution}GA')
 
