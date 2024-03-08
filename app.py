@@ -81,7 +81,7 @@ if submitted:
         # 季節性の計算
         uq2019_options = {
             "January": 109,
-            "February": 96,
+            "February": 109,
             "March": 118,
             "April": 100,
             "May": 88,
