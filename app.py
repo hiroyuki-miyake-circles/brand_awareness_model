@@ -88,10 +88,10 @@ if submitted:
             "June": 72,
             "July": 75,
             "August": 77,
-            "September": 102,
-            "October": 76,
+            "September": 110,
+            "October": 96,
             "November": 85,
-            "December": 96
+            "December": 90
         }
         uq2019 = uq2019_options[selected_month]
         seasonality_contribution = round(coef['Seasonality'] * uq2019 + coef['intercept'],1)
